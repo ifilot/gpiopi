@@ -14,7 +14,7 @@ SRCDIR = ./src
 CFLAGS += -I$(SRCDIR)
 
 # add here the source files for the compilation
-SOURCES = main.cpp gpio.cpp
+SOURCES = main.cpp gpio.cpp rpicsb.cpp
 
 # create the obj variable by substituting the extension of the sources
 # and adding a path

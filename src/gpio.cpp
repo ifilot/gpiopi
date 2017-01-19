@@ -49,9 +49,9 @@ void GPIO::set_alt(unsigned int g, unsigned int a) {
 }
 
 void GPIO::set(unsigned int g) {
-    *(this->gpio+7) |= (1 << g); // sets   bits which are 1 ignores bits which are 0
+    *(this->gpio+7) = (1 << g);   // sets   bits which are 1 ignores bits which are 0
 }
 
 void GPIO::unset(unsigned int g) {
-    *(this->gpio+10) |= (1 << g);  // clears bits which are 1 ignores bits which are 0
+    *(this->gpio+10) = (1 << g);  // clears bits which are 1 ignores bits which are 0
 }
