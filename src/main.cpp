@@ -1,19 +1,23 @@
-#include <iostream>
-#include <unistd.h>
-
 #include "gpio.h"
 
 int main() {
-    GPIO gpio;
+    // Set up gpi pointer for direct register access
 
-    for(unsigned int i=0; i<10; i++) {
-        gpio.set_pin_high(2);
-        usleep(500000);
-        gpio.set_pin_low(2);
-        gpio.set_pin_high(3);
-        usleep(500000);
-        gpio.set_pin_low(3);
-    }
+    // pin setup
+    // 17 : BLUE
+    // 27 : GREEN
+    // 22 : RED
+
+    GPIO::get().in(17);
+    GPIO::get().in(27);
+    GPIO::get().in(22);
+
+    GPIO::get().out(17);
+    GPIO::get().out(27);
+    GPIO::get().out(22);
+
+    GPIO::get().set(17);
+
 
     return 0;
 }

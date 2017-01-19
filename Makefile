@@ -24,7 +24,7 @@ OBJ = $(patsubst %,$(OBJDIR)/%,$(_OBJ))
 all: $(BINDIR)/$(EXEC)
 
 $(BINDIR)/$(EXEC): $(OBJ)
-	$(CXX) -o $(BINDIR)/$(EXEC) $(OBJ) $(LDFLAGS)
+	$(CXX) -o $(BINDIR)/$(EXEC) $(OBJ) $(LDFLAGS) && sudo chown 0:0 $(BINDIR)/$(EXEC) && sudo chmod u+s $(BINDIR)/$(EXEC)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	$(CXX) -c -o $@ $< $(CFLAGS)

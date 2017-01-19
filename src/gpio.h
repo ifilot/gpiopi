@@ -1,41 +1,48 @@
 #ifndef _GPIO_H
 #define _GPIO_H
 
-#include <stdint.h>
-#include <string>
-#include <vector>
-#include <fstream>
-#include <iostream>
+#define BCM2708_PERI_BASE       0x20000000
+#define GPIO_BASE               (BCM2708_PERI_BASE + 0x200000) // GPIO_CONTROLLER
+
+#include <stdio.h>
 #include <stdlib.h>
+#include <fcntl.h>
+#include <sys/mman.h>
 #include <unistd.h>
 
+#define PAGE_SIZE (4*1024)
+#define BLOCK_SIZE (4*1024)
+
 class GPIO {
-
 private:
-    enum {
-        PIN_OFF,
-        PIN_ON,
-        PIN_OUTPUT,
-        PIN_INPUT
-    };
+    int mem_fd;
+    void *gpio_map;
 
-    std::vector<uint8_t> pin_status;    // track pin status
+    // I/O access
+    volatile unsigned *gpio;
 
 public:
-    GPIO();
+    static GPIO& get() {
+        static GPIO gpio_instance;
+	return gpio_instance;
+    }
 
-    void set_pin_high(unsigned int pin_id);
-    void set_pin_low(unsigned int pin_id);
+    void in(unsigned int g);
+    void out(unsigned int g);
+    void set_alt(unsigned int g, unsigned int a);
 
-    void set_pin_input(unsigned int pin_id);
-    void set_pin_output(unsigned int pin_id);
-
-    ~GPIO();
+    void set(unsigned int g);
+    void unset(unsigned int g);
 
 private:
-    void open_pin(unsigned int pin_id);
-    void close_pin(unsigned int pin_id);
+    GPIO();
 
+    void setup_io();
+
+    GPIO(GPIO const&)           = delete;
+    void operator=(GPIO const&) = delete;
 };
+
+void setup_io();
 
 #endif //_GPIO_H
